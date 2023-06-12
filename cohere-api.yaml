@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Cohere AI API
+  version: 1.0.0
+servers:
+  url: https://api.cohere.ai/v1/
+  description: this is a test url
+components: 
+  securitySchemes:
+    api key: 
+      type: apikey
+      name: API-KEY
+      in: header
+paths:
+  /v1/generate:
+    post:
+      summary: Generate realistic text conditioned on a given input
+      operationId: generateText
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateInput'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateOutput'
+              example:
+                {
+                  "generated_text": "This is an example of the generated text."
+                }
+        '400':
+          description: Bad request. Please check your request body and try again.
+        '404':
+          description: Endpoint not found. Please check the endpoint and try again.
+components:
+  schemas:
+    GenerateInput:
+      type: object
+      description: The input data for the generate endpoint.
+      properties:
+        input_text:
+          type: string
+          description: The input text to condition the generated text on.
+    GenerateOutput:
+      type: object
+      description: The output data from the generate endpoint.
+      properties:
+        generated_text:
+          type: string
+          description: The generated text conditioned on the input text.
